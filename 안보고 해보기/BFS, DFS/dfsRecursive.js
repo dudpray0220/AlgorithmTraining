@@ -48,61 +48,23 @@ function createGraph() {
   return graph;
 }
 
-// 재귀적 DFS 구현
 function dfsRecursive(graph, startNode) {
-  const visited = new Set(); // 방문한 노드 추적
-  const result = []; // 방문 순서 저장
+  const visited = new Set();
+  const result = [];
 
   function explore(node) {
-    // 현재 노드를 방문 처리
     visited.add(node);
     result.push(node);
 
-    // 인접 노드를 방문 (이미 낮은 번호 순으로 정렬되어 있음)
     const neighbors = graph.get(node) || [];
     for (const neighbor of neighbors) {
-      // 아직 방문하지 않은 노드만 방문
       if (!visited.has(neighbor)) {
         explore(neighbor);
       }
     }
   }
 
-  // 시작 노드부터 탐색 시작
   explore(startNode);
-  return result;
-}
-
-// 스택을 활용한 반복적 DFS 구현
-function dfsIterative(graph, startNode) {
-  const visited = new Set(); // 방문한 노드 추적
-  const result = []; // 방문 순서 저장
-  const stack = [startNode]; // 방문할 노드를 저장하는 스택
-
-  while (stack.length > 0) {
-    // 스택에서 노드 꺼내기
-    const node = stack.pop();
-
-    // 이미 방문한 노드는 건너뛰기
-    if (visited.has(node)) continue;
-
-    // 현재 노드를 방문 처리
-    visited.add(node);
-    result.push(node);
-
-    // 인접 노드를 스택에 추가 (번호가 낮은 노드를 나중에 처리하도록 역순으로 추가)
-    // 스택 = 후입선출 이므로
-    const neighbors = [...(graph.get(node) || [])]; // 인접 노드 배열 복사
-    // 마지막 요소부터 첫 요소까지 역순으로
-    for (let i = neighbors.length - 1; i >= 0; i--) {
-      const neighbor = neighbors[i];
-      if (!visited.has(neighbor)) {
-        // 방문하지 않은 노드만
-        stack.push(neighbor); // 스택에 추가
-      }
-    }
-  }
-
   return result;
 }
 
@@ -115,7 +77,3 @@ const startNode = 1;
 // 재귀적 DFS 실행
 const recursiveResult = dfsRecursive(graph, startNode);
 console.log('재귀적 DFS 방문 순서:', recursiveResult.join(' -> '));
-
-// 반복적 DFS 실행
-const iterativeResult = dfsIterative(graph, startNode);
-console.log('반복적 DFS 방문 순서:', iterativeResult.join(' -> '));

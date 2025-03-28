@@ -9,15 +9,14 @@
 // output: N이 1이 되는 최소 횟수
 // 핵심: 나눌 수 있으면 최대한 나눈다!
 
-function solution(N, K) {
+function solution(n, k) {
   let count = 0;
 
-  while (N > 1) {
-    // K로 나누는게 1을 빼는 것 보다 최소로 구할 수 있음. 최대한 나눠야 함.
-    if (N % K === 0) {
-      N /= K;
+  while (n > 1) {
+    if (n % k === 0) {
+      n /= k;
     } else {
-      N -= 1;
+      n -= 1;
     }
     count++;
   }
@@ -25,27 +24,21 @@ function solution(N, K) {
   return count;
 }
 
-function optimizeSolution(N, K) {
+function optimizeSolution(n, k) {
   let count = 0;
 
-  while (N > 1) {
-    // N이 K보다 작으면 1이 될 때까지 한 번에 빼기{
-    if (N < K) {
-      count += N - 1;
+  while (n > 1) {
+    if (n < k) {
+      count += n - 1;
       break;
     }
 
-    // 나누어 떨어지는 수가 되도록 나머지를 한 번에 빼기
-    const target = Math.floor(N / K) * K;
-    count += N - target;
-    N = target;
+    const target = Math.floor(n / k) * k;
+    n = target;
 
-    // K로 나누기
-    N /= K;
+    n /= k;
     count++;
   }
 
   return count;
 }
-
-// console.log(solution(25, 5));

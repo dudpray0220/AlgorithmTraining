@@ -41,28 +41,22 @@ function createGraph() {
   return graph;
 }
 
-// BFS 구현
 function bfs(graph, startNode) {
-  const visited = new Set(); // 방문한 노드 추적
-  const result = []; // 방문 순서 저장
-  const queue = [startNode]; // 방문할 노드를 저장하는 큐
+  const visited = new Set();
+  const result = [];
+  const queue = [startNode];
 
-  // 시작 노드를 방문 처리
   visited.add(startNode);
 
-  // 큐가 빌 때까지 반복
   while (queue.length > 0) {
-    // 큐에서 노드 꺼내기 (선입선출)
     const node = queue.shift();
 
-    // 현재 노드를 결과에 추가
     result.push(node);
 
-    // 현재 노드의 인접 노드 중 아직 방문하지 않은 노드들을 큐에 추가
     const neighbors = graph.get(node) || [];
     for (const neighbor of neighbors) {
       if (!visited.has(neighbor)) {
-        visited.add(neighbor); // 큐에 추가하기 전에 방문 처리 (중복 방지)
+        visited.add(neighbor);
         queue.push(neighbor);
       }
     }

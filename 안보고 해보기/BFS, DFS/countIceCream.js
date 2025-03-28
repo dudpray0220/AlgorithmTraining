@@ -28,55 +28,43 @@
  * @return {number} - 생성되는 아이스크림의 총 개수
  */
 
-// DFS를 사용한 해결책
 function countIceCream(n, m, grid) {
-  // 얼음 틀 정보를 2차원 배열로 변환
   const iceFrame = [];
   for (let i = 0; i < n; i++) {
     iceFrame.push(grid[i].split('').map(Number));
   }
 
-  // 방문 여부를 체크할 배열 초기화
   const visited = Array(n)
     .fill()
     .map(() => Array(m).fill(false));
 
-  // 상, 하, 좌, 우 방향 벡터
   const dx = [-1, 1, 0, 0];
   const dy = [0, 0, -1, 1];
 
-  // 유효한 좌표인지 확인하는 함수
   function isValid(x, y) {
     return x >= 0 && x < n && y >= 0 && y < m;
   }
 
-  // DFS로 연결된 0 탐색
   function dfs(x, y) {
-    // 방문 처리
     visited[x][y] = true;
 
-    // 상, 하, 좌, 우 탐색
     for (let i = 0; i < 4; i++) {
       const nx = x + dx[i];
       const ny = y + dy[i];
 
-      // 유효한 범위이고, 방문하지 않았으며, 구멍(0)인 경우
       if (isValid(nx, ny) && !visited[nx][ny] && iceFrame[nx][ny] === 0) {
         dfs(nx, ny);
       }
     }
   }
 
-  // 아이스크림 개수 카운트
   let iceCreamCount = 0;
 
-  // 모든 위치를 순회하며 시작점 찾기
   for (let i = 0; i < n; i++) {
     for (let j = 0; j < m; j++) {
-      // 방문하지 않은 구멍(0)인 경우 새로운 아이스크림 시작점
       if (!visited[i][j] && iceFrame[i][j] === 0) {
-        dfs(i, j); // DFS로 연결된 모든 구멍 방문
-        iceCreamCount++; // 아이스크림 개수 증가
+        dfs(i, j);
+        iceCreamCount++;
       }
     }
   }

@@ -26,53 +26,41 @@
  * @return {number} - 탈출하기 위한 최소 이동 칸 수
  */
 
-// BFS를 활용한 미로 탈출 구현
 function escapeMaze(n, m, maze) {
-  // 미로 정보를 2차원 배열로 변환
   const grid = [];
   for (let i = 0; i < n; i++) {
     grid.push(maze[i].split('').map(Number));
   }
 
-  // 방문 거리를 저장할 배열 (미방문: 0, 방문: 거리 값)
   const distance = Array(n)
     .fill()
     .map(() => Array(m).fill(0));
 
-  // 시작 위치 설정 (문제에서는 1-인덱스 기준이지만 코드에서는 0-인덱스로 처리)
   const startX = 0;
   const startY = 0;
-  distance[startX][startY] = 1; // 시작 위치도 카운트
+  distance[startX][startY] = 1;
 
-  // 상, 하, 좌, 우 방향 벡터
   const dx = [-1, 1, 0, 0];
   const dy = [0, 0, -1, 1];
 
-  // BFS 수행을 위한 큐 초기화
   const queue = [[startX, startY]];
 
-  // BFS 탐색 시작
   while (queue.length > 0) {
     const [x, y] = queue.shift();
 
-    // 상, 하, 좌, 우 탐색
     for (let i = 0; i < 4; i++) {
       const nx = x + dx[i];
       const ny = y + dy[i];
 
-      // 미로 범위를 벗어나는 경우 건너뛰기
       if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
 
-      // 괴물이 있거나(0)이거나 이미 방문한 경우 건너뛰기
       if (grid[nx][ny] === 0 || distance[nx][ny] !== 0) continue;
 
-      // 이동 가능한 위치라면 거리 업데이트 후 큐에 추가
       distance[nx][ny] = distance[x][y] + 1;
       queue.push([nx, ny]);
     }
   }
 
-  // 출구(N-1, M-1)까지의 최단 거리 반환
   return distance[n - 1][m - 1];
 }
 

@@ -15,19 +15,14 @@
 // output: 가장 큰 수
 // 핵심: 0, 1일땐 +, 나머지 경우엔 x 가 더 큰 결과를 만든다!
 
-function solution(S) {
-  // 문자열을 숫자 배열로 변환
-  const nums = S.split('').map((char) => parseInt(char));
+function solution(s) {
+  const nums = s.split('').map((char) => parseInt(char));
 
-  // 연산 결과를 저장할 변수 초기화
   let result = nums[0];
 
-  // 첫번째 숫자부터 순서대로 연산 (result가 nums[0] 이므로 nums[1] 부터터)
   for (let i = 1; i < nums.length; i++) {
     const currentNum = nums[i];
 
-    // 현재 숫자나 결과가 0 또는 1이면 더하기가 더 큰 결과를 만듦
-    // 0과의 곱셈은 항상 0, 1과의 곱셈은 변화 없음
     if (currentNum <= 1 || result <= 1) {
       result += currentNum;
     } else {

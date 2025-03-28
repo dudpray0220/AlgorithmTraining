@@ -16,23 +16,17 @@
  */
 
 function isAnagram(str1, str2) {
-  // 길이가 다르면 애너그램일 수 없음
   if (str1.length !== str2.length) return false;
 
-  // 문자 빈도수를 저장할 객체
   const frequencyCounter = {};
 
-  // 첫 번째 문자열의 각 문자 빈도수 계산
   for (const char of str1) {
     frequencyCounter[char] = (frequencyCounter[char] || 0) + 1;
   }
 
-  // 두 번째 문자열과 비교
   for (const char of str2) {
-    // 해당 문자가 존재하지 않거나 빈도수가 0이면 애너그램이 아님
     if (!frequencyCounter[char]) return false;
 
-    // 빈도수 감소
     frequencyCounter[char] -= 1;
   }
 

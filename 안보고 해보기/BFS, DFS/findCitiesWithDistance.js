@@ -19,45 +19,33 @@
  */
 
 function findCitiesWithDistance(n, m, k, x, roads) {
-  // 그래프 초기화: 각 도시에서 갈 수 있는 도시들을 저장
   const graph = Array.from({ length: n + 1 }, () => []);
 
-  // 도로 정보로 그래프 구축
   for (const [from, to] of roads) {
     graph[from].push(to);
   }
 
-  // 최단 거리 배열 초기화 (-1은 방문하지 않은 도시)
   const distances = Array(n + 1).fill(-1);
-  distances[x] = 0; // 출발 도시는 거리 0
+  distances[x] = 0;
 
-  // BFS를 위한 큐 초기화
   const queue = [x];
 
-  // BFS 수행
   while (queue.length > 0) {
     const currentCity = queue.shift();
 
-    // 현재 도시에서 갈 수 있는 모든 도시 확인
     for (const nextCity of graph[currentCity]) {
-      // 아직 방문하지 않은 도시라면
       if (distances[nextCity] === -1) {
-        // 거리 업데이트 (현재 도시 거리 + 1)
         distances[nextCity] = distances[currentCity] + 1;
         queue.push(nextCity);
       }
     }
   }
 
-  // 최단 거리가 K인 도시들 찾기
   const result = [];
   for (let i = 1; i <= n; i++) {
-    if (distances[i] === k) {
-      result.push(i);
-    }
+    if (distances[i] === k) result.push(i);
   }
 
-  // K 거리의 도시가 없으면 [-1] 반환, 있으면 오름차순 정렬된 결과 반환
   return result.length === 0 ? [-1] : result;
 }
 
