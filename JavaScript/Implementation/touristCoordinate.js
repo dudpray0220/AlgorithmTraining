@@ -21,7 +21,6 @@
 
 // input: 공간크기 N, 이동 계획서 내용 문자열
 // output: 최종 도착 지점 좌표
-// 핵심: L R U D 방향 dx, dy를 만든 후 차례대로 구현!
 
 function solution(N, plans) {
   // 시작 위치 초기화
